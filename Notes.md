@@ -1,68 +1,60 @@
- ## Day 1 (22 Aug 2026):
+# Hostel Allotment System — Progress Log
 
-- **Kya kiya** : Backend + frontend setup complete, MySQL 5 tables banayi, 
-  Express server + DB connect kiya, Tailwind configure kiya
-- **Naya kya seekha**: connection pool, middleware, Tailwind v3 vs v4 ka difference, 
-  npm package versioning (@3 se specific version install karna)
-- Stuck kahan hua: Tailwind v4 accidentally install ho gaya tha (init -p error), 
-  v3 explicitly install karke fix kiya
-- Kal kya karna hai: JWT + bcrypt ka concept samajhna
+---
 
+## Day 1 — Project Setup
+**Kya banaya:** Backend (Express) + Frontend (React+Vite+Tailwind) setup, MySQL mein 5 tables banayi (users, students, rooms, preferences, allotments), backend ko DB se connect kiya.
 
- ## Day 2 (23 Aug 2026):
-- Kya kiya: JWT + bcrypt concept theory se samjha (pure theory day, no code)
-- Naya kya seekha: 
-  - Hashing vs Encryption (one-way vs two-way)
-  - bcrypt slow kyun hai (brute-force resistance) + salt kya karta hai
-  - Session-based vs JWT-based auth, "stateless" ka matlab
-  - JWT ke 3 parts: Header, Payload, Signature — signature security kaise deta hai
-- Quiz: 100% score, concepts clear
-- Kal kya karna hai: Actual code likhna shuru — Register API (bcrypt se password hash karna)
+**Concepts seekhe:**
+- Connection pool — multiple DB connections ready rakhta hai, reuse hote hain (fast/efficient)
+- Middleware (`cors`, `express.json()`) — request route tak pahunchne se pehle chalta hai
+- `.env` file — secrets code se alag rakhne ke liye
 
+**Bugs/Errors:**
+- Tailwind v4 accidentally install ho gaya (`init -p` error) — `tailwindcss@3` explicitly install karke fix kiya
 
-## Day 3 (26 Aug 2026) — Register API
+---
 
-### Kya Banaya
-Register API — naya user create karta hai, password securely hash karke store karta hai.
+## Day 2 — JWT + bcrypt Theory
+**Kya seekha:** Password security aur authentication ka poora theory, koi code nahi likha.
 
-### Files Banayi
-- controllers/authController.js → register logic
-- routes/authRoutes.js → URL route define kiya
-- index.js → route ko app mein connect kiya
+**Concepts seekhe:**
+- Hashing (one-way, irreversible) vs Encryption (two-way, reversible)
+- bcrypt jaan-boojh kar slow hai — brute-force attacks mushkil ho jate hain
+- Salt — same password ke bhi different hash banata hai (rainbow table attacks se bachata hai)
+- Session-based auth (server state store karta hai) vs JWT (stateless, khud-nirbhar token)
+- JWT structure: Header.Payload.Signature — payload sirf encoded hota hai (encrypted nahi), isliye sensitive data (password) kabhi payload mein nahi daalte
 
-### Naye Concepts Seekhe
+**Quiz:** 100% score
 
-**1. Controller-Route Pattern (MVC jaisa)**
-- Controller = actual logic (kya karna hai)
-- Route = URL mapping (kis URL pe kya chalega)
-- Isse code organized rehta hai, sab kuch ek file mein nahi thoosa
+---
 
-**2. express.Router()**
-- Mini-app jaisa hota hai, alag-alag feature (auth, rooms, etc.) ke routes 
-  alag files mein rakhne deta hai
+## Day 3 — Register API
+**Kya banaya:** Register API — naya user create karta hai, password bcrypt se hash karke store karta hai.
 
-**3. module.exports / require destructuring**
-- `module.exports = { register }` → ek object export kiya
-- `const { register } = require(...)` → us object se specific 
-  cheez nikaali (destructuring)
+**Concepts seekhe:**
+- Controller-Route pattern — Controller mein logic, Route mein URL mapping (code organized rehta hai)
+- `express.Router()` — alag-alag features (auth, rooms) ke routes alag files mein rakhne deta hai
+- Parameterized queries (`?` placeholders) — SQL Injection se bachata hai
+- `bcrypt.hash(password, 10)` — `10` = salt rounds, jitna zyada utna secure/slow
+- `module.exports`/`require` destructuring (`{ }`)
 
-**4. HTTP Methods Route Matching**
-- Express route match karte waqt METHOD + PATH dono check karta hai
-- GET vs POST alag treat hote hain, chahe URL same ho
-- Isi wajah se 404 aaya tha jab method galat tha (GET tha, POST hona chahiye tha)
-
-**5. Parameterized Queries (?)**
-- `WHERE email = ?` — ye SQL Injection se bachata hai
-- Values array mein alag se bhejte hain, directly string mein nahi jodte
-
-**6. bcrypt.hash(password, 10)**
-- 10 = salt rounds, jitna zyada utna secure/slow
-- Result hamesha ek scrambled hash hota hai, reversible nahi
-
-### Errors Jo Aaye Aur Fix Kiye
+**Bugs/Errors:**
 - Typo: `requirre` likha tha `require` ki jagah
-- Postman mein method GET tha, POST karna tha (isse 404 aaya) — 
-  ye samjha ki Express route match karte waqt method bhi check karta hai
+- Postman mein method GET tha (POST hona chahiye tha) → 404 error — seekha ki Express route match karte waqt method + path dono check karta hai
 
-### Kal Kya Karna Hai
-Login API — bcrypt se password verify karna, JWT token generate karna
+---
+
+## Day 4 — Login API + JWT
+**Kya banaya:** Login API — email/password verify karta hai, sahi hone par JWT token generate karta hai.
+
+**Concepts seekhe:**
+- `bcrypt.compare(plainPassword, storedHash)` — login ke time password verify karta hai (reverse nahi, compare karta hai)
+- `jwt.sign(payload, secret, options)` — token banata hai; `expiresIn` se token ki validity set hoti hai
+- Generic error message ("Invalid credentials") — email exist karta hai ya nahi ye leak nahi karte (security best practice)
+- Status codes: `401` = Unauthorized (auth fail), `400` = Bad Request (validation fail)
+
+**Bugs/Errors:**
+- Server temporarily crash hua tha (nodemon restart ke beech request bhej di thi)
+- Postman URL bar mein galti se "post" word type ho gaya (method dropdown se select karna tha, URL mein nahi) — seekha Method dropdown aur URL bar alag cheezein hain
+
