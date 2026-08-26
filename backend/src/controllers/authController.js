@@ -48,3 +48,68 @@ const register = async (req, res) => {
 
 // Is function ko export kar rahe hain taaki route file isse use kar sake
 module.exports = { register };
+
+// jwt library import kar rahe hain - JWT_SECRET se token sign/verify karne ke liye
+const jwt = require('jsonwebtoken');
+
+const login = async (req, res) => {
+  try {
+    // Frontend se email aur password nikalo
+    const { email, password } = req.body;
+
+    // Validation
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password are required' });
+    }
+
+    // Email se user dhoondo database mein
+    const [users] = await pool.query(
+      'SELECT * FROM users WHERE email = ?',
+      [email]
+    );
+
+    // Agar user mila hi nahi - generic error (security ke liye, 
+    // "email exist nahi karta" specifically nahi batate)
+    if (users.length === 0) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Query se pehla (aur akela) matching user nikaal lo
+    const user = users[0];
+
+    // bcrypt.compare() - entered password ko DB wale hash se compare karta hai
+    // Ye bilkul waisa hi kaam karta hai jaisa Day 2 mein samjha tha:
+    // fresh hash nahi banate, balki bcrypt internally check karta hai match hai ya nahi
+    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Password sahi hai - ab JWT token banate hain
+    // Payload mein sirf non-sensitive info daal rahe hain (userId, role)
+    // JWT_SECRET .env se aa raha hai - isी se signature banega
+    const token = jwt.sign(
+      { userId: user.id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' } // token 7 din baad expire ho jayega
+    );
+
+    // Token aur basic user info wapas bhej rahe hain
+    res.status(200).json({
+      message: 'Login successful',
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+// Ab dono functions export karo (register already tha, login add kiya)
+module.exports = { register, login };
