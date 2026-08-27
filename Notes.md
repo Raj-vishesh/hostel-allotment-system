@@ -1,6 +1,8 @@
 # Hostel Allotment System — Progress Log
 
----
+---  git add .
+     git commit -m "Day 5: Auth middleware for JWT verification, protected route tested"
+     git push
 
 ## Day 1 — Project Setup
 **Kya banaya:** Backend (Express) + Frontend (React+Vite+Tailwind) setup, MySQL mein 5 tables banayi (users, students, rooms, preferences, allotments), backend ko DB se connect kiya.
@@ -58,3 +60,16 @@
 - Server temporarily crash hua tha (nodemon restart ke beech request bhej di thi)
 - Postman URL bar mein galti se "post" word type ho gaya (method dropdown se select karna tha, URL mein nahi) — seekha Method dropdown aur URL bar alag cheezein hain
 
+## Day 5 — Auth Middleware
+**Kya banaya:** JWT verify karne wala middleware, aur ek protected test route (`/profile`).
+
+**Concepts seekhe:**
+- Middleware `next()` function se control agle step ko pass karta hai — agar `next()` na bulaye to request wahi ruk jati hai
+- Route mein multiple functions chain kar sakte hain: `router.get(path, middleware, handler)`
+- `Authorization: Bearer <token>` header format — standard convention hai
+- `jwt.verify(token, secret)` — signature check karta hai, valid hone par payload return karta hai
+- `req.user = decoded` — middleware se controller tak data pass karne ka tarika (bina dobara DB query kiye)
+
+**Bugs/Errors:**
+- ECONNREFUSED baar baar aaya — server/nodemon restart ke beech request bhej dete the (timing issue, code ki galti nahi thi)
+- Postman ka apna internal crash "Body" tab kholne par GET request mein — Body tab ki zarurat hi nahi thi is route ke liye, seedha Headers use kiya
