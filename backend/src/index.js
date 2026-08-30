@@ -4,11 +4,17 @@ const cors = require('cors');
 const pool = require('./config/db');
 
 const authRoutes = require('./routes/authRoutes');
+const roomRoutes = require('./routes/roomRoutes');
 
+// YE LINE PEHLE AANI CHAHIYE - app yahan banta hai
 const app = express();
+
 app.use(cors());
 app.use(express.json());
+
+// AB YE LINES - app already ban chuka hai isliye ye chalengi
 app.use('/api/auth', authRoutes);
+app.use('/api/rooms', roomRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Backend is running' });

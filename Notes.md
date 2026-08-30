@@ -73,3 +73,19 @@
 **Bugs/Errors:**
 - ECONNREFUSED baar baar aaya — server/nodemon restart ke beech request bhej dete the (timing issue, code ki galti nahi thi)
 - Postman ka apna internal crash "Body" tab kholne par GET request mein — Body tab ki zarurat hi nahi thi is route ke liye, seedha Headers use kiya
+
+## Day 6 -- Revision
+
+## Day 7 — Rooms CRUD (Backend)
+**Kya banaya:** Room Create, Read, Delete APIs — admin room add/delete kar sake, sab room list dekh sakein.
+
+**Concepts seekhe:**
+- CRUD (Create, Read, Update, Delete) — har app ka basic data pattern
+- REST API convention — same URL (`/api/rooms`), different HTTP methods se alag operations
+- `req.params` — URL ke andar se dynamic value nikaalta hai (jaise `:id`), `req.body` se alag
+- Middleware selectively lagana — Create/Delete protected (verifyToken), Read public rakha
+
+**Bugs/Errors:**
+- `app.use()` lines `const app = express()` se pehle likh di thi — "Cannot access 'app' before initialization" error. Seekha: JS top-to-bottom execute hoti hai, variable use karne se pehle define hona chahiye
+- MySQL Server band ho gaya tha (laptop restart ki wajah se) — `ECONNREFUSED 3306` error aaya login mein bhi. Services se MySQL start karke fix kiya
+
