@@ -10,9 +10,7 @@ const createRoom = async (req, res) => {
     if (!room_number || !hostel_block) {
       return res.status(400).json({ message: 'Room number and hostel block are required' });
     }
-
-    // Database mein insert karo
-    // 'capacity || 1' - agar capacity nahi di gayi to default 1 use hoga
+ 
     const [result] = await pool.query(
       'INSERT INTO rooms (room_number, hostel_block, capacity, floor, room_type) VALUES (?, ?, ?, ?, ?)',
       [room_number, hostel_block, capacity || 1, floor || null, room_type || null]
@@ -43,7 +41,7 @@ const getAllRooms = async (req, res) => {
 // DELETE - ek specific room delete karo uski id se
 const deleteRoom = async (req, res) => {
   try {
-    // req.params - URL ke andar se value nikaalta hai (jaise /api/rooms/5 se '5')
+
     const { id } = req.params;
 
     // Pehle check karo room exist karta hai (behtar error message ke liye)
