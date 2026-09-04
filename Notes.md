@@ -103,3 +103,17 @@
 **Bugs/Errors:**
 - `localStorage.setItem('token', data.user.role)` — dusri line mein galti se key `'token'` hi rakh diya (`'role'` hona chahiye tha), isse token overwrite ho gaya. Seekha: same key use karne se pehli value replace ho jati hai
 - App.jsx mein temporary syntax error (component switch karte waqt)
+
+## Day 9 — Room List Display (Frontend)
+**Kya banaya:** RoomList page — saare rooms card-grid format mein dikhata hai, backend se fetch karke.
+
+**Concepts seekhe:**
+- `useEffect(() => {...}, [])` — component load hote hi automatically code chalata hai (khali dependency array = sirf ek baar)
+- `useEffect` ke andar async function alag banate hain (direct async allowed nahi hai useEffect callback mein)
+- `.map()` — array ke har element se JSX bana deta hai (list render karne ka tarika)
+- `key={room.id}` — list render karte waqt har item ko unique key deni zaroori hai (React ke liye)
+- `try/catch/finally` — finally hamesha chalta hai, success ho ya error (loading state clear karne ke liye use kiya)
+- Tailwind responsive classes (`md:grid-cols-2`, `lg:grid-cols-3`) — screen size ke hisaab se layout badalta hai
+
+**Bugs/Errors:**
+- Import naam aur usage naam mismatch tha (`import AddRoom from './pages/RoomList'` lekin `<RoomList />` use kiya) — fix kiya consistent naam rakh ke

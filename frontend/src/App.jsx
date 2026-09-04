@@ -1,9 +1,9 @@
-import AddRoom from './pages/AddRoom';
+import RoomList from './pages/RoomList';
 
 function App() {
   return (
     <div>
-      <AddRoom />
+      <RoomList />
     </div>
   );
 }
