@@ -89,3 +89,17 @@
 - `app.use()` lines `const app = express()` se pehle likh di thi — "Cannot access 'app' before initialization" error. Seekha: JS top-to-bottom execute hoti hai, variable use karne se pehle define hona chahiye
 - MySQL Server band ho gaya tha (laptop restart ki wajah se) — `ECONNREFUSED 3306` error aaya login mein bhi. Services se MySQL start karke fix kiya
 
+## Day 8 — Frontend: Login + Add Room Form
+**Kya banaya:** Login page aur Room-Add page (React), dono backend APIs se connected.
+
+**Concepts seekhe:**
+- Controlled components — `useState` + `value` + `onChange` se form input control karna
+- `fetch()` se backend API call karna — method, headers, body kaise structure karte hain
+- `e.preventDefault()` — form submit pe page reload rokta hai
+- `localStorage` — token persist karne ke liye (setItem/getItem)
+- Template literals (`` `Bearer ${token}` ``) — string ke andar variable daalne ka clean tarika
+- Conditional rendering (`{error && <p>...}`) aur dynamic className (ternary se)
+
+**Bugs/Errors:**
+- `localStorage.setItem('token', data.user.role)` — dusri line mein galti se key `'token'` hi rakh diya (`'role'` hona chahiye tha), isse token overwrite ho gaya. Seekha: same key use karne se pehli value replace ho jati hai
+- App.jsx mein temporary syntax error (component switch karte waqt)
