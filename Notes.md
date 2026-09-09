@@ -117,3 +117,5 @@
 
 **Bugs/Errors:**
 - Import naam aur usage naam mismatch tha (`import AddRoom from './pages/RoomList'` lekin `<RoomList />` use kiya) — fix kiya consistent naam rakh ke
+
+## Day 10 ---      for prefernece and security 
