@@ -1,9 +1,9 @@
-import RoomList from './pages/RoomList';
+import PreferenceForm from './pages/PreferenceForm';
 
 function App() {
   return (
     <div>
-      <RoomList />
+      <PreferenceForm />
     </div>
   );
 }

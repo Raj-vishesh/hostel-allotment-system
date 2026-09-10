@@ -118,4 +118,28 @@
 **Bugs/Errors:**
 - Import naam aur usage naam mismatch tha (`import AddRoom from './pages/RoomList'` lekin `<RoomList />` use kiya) — fix kiya consistent naam rakh ke
 
-## Day 10 ---      for prefernece and security 
+## Day 10 — Preferences API (Backend)
+**Kya banaya:** Preferences Submit aur Get APIs — student apni ranked room choices bhej sake.
+
+**Concepts seekhe:**
+- SQL JOIN — do tables ko common column se jodkar ek query mein combined data lana
+- `req.user.userId` — middleware se pehle se verified user ki info reuse karna
+- `for...of` loop — array ke har element pe async operation (DB insert) chalane ke liye
+- `Array.isArray()` — validate karna ki input array hai ya nahi
+
+**Bugs/Errors:**
+- `express.json()` middleware order/missing hone se `req.body` undefined aa raha tha
+- Token expire/mismatch ki wajah se 401 aaya — fresh login se fix hota hai
+
+## Day 11 — Preference Form (Frontend)
+**Kya banaya:** PreferenceForm page — student rooms dekh ke unhe rank de sake, backend ko submit ho.
+
+**Concepts seekhe:**
+- Object state (`ranks = {}`) — har room ki rank ko `room_id` key se track karna
+- Spread operator (`...prev`) — state update karte waqt purani values preserve karna
+- `Object.entries()` — object ko array mein convert karna taaki `.filter()`/`.map()` use ho sake
+- Dynamic object key (`[roomId]: value`) — variable se key naam banana
+
+**Bugs/Errors:**
+- Token expire/galat ho gaya tha switch karte waqt — fresh login se fix hua
+- Background color off dikh raha tha (browser extension ki wajah se, Tailwind sahi tha)
