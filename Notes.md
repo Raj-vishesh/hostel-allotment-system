@@ -131,7 +131,7 @@
 - `express.json()` middleware order/missing hone se `req.body` undefined aa raha tha
 - Token expire/mismatch ki wajah se 401 aaya — fresh login se fix hota hai
 
-## Day 11 — Preference Form (Frontend)
+## Day 11 and 12 — Preference Form (Frontend)
 **Kya banaya:** PreferenceForm page — student rooms dekh ke unhe rank de sake, backend ko submit ho.
 
 **Concepts seekhe:**
@@ -143,3 +143,17 @@
 **Bugs/Errors:**
 - Token expire/galat ho gaya tha switch karte waqt — fresh login se fix hua
 - Background color off dikh raha tha (browser extension ki wajah se, Tailwind sahi tha)
+
+## Day 15 — Gale-Shapley Algorithm (Code)
+**Kya banaya:** `galeShapley.js` — standalone function jo student preferences aur room capacities leke stable matching return karta hai. Sample data pe test kiya, manual trace se match kiya.
+
+**Concepts seekhe:**
+- `for...in` (object keys pe loop) vs `for...of` (array elements pe loop)
+- `while` loop — condition-based, jab tak free students bache hain
+- `.filter()` se array se specific item hatana
+- `continue` keyword — loop ko turant agle iteration pe le jana
+- Object keys hamesha strings hoti hain (chahe number jaisi dikhein)
+- Simplified Gale-Shapley — rooms "prefer" nahi karte, sirf capacity ke hisaab se accept/reject karte hain
+
+**Bugs/Errors:**
+- Test file create nahi ki thi, sirf dekhi thi — "Module not found" error. Seekha: code dekhna aur file banana alag cheezein hain
