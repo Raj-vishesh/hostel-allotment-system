@@ -163,3 +163,14 @@
 
 Saare 4 edge cases test kiye: students>capacity, rooms>students, multi-capacity rooms, 
 same-first-preference competition. Sab sahi result de rahe hain.
+
+## Day 18 — Match Trigger API
+**Kya banaya:** `POST /api/match/run` — DB se preferences+rooms nikaal ke Gale-Shapley chalata hai, result `allotments` table mein save karta hai.
+
+**Concepts seekhe:**
+- Database rows ko algorithm-friendly format (object) mein convert karna — real-world common pattern
+- `if (!obj[key])` pattern — object mein dynamically array banane ke liye
+- `ORDER BY col1, col2 ASC` — multi-level SQL sorting
+- Nested loops (`for...in` ke andar `for...of`) — nested data structure (object of arrays) process karne ke liye
+
+**Result:** Test kiya real DB data se — matchedCount aur allotments table dono sahi update hue
