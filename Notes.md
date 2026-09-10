@@ -157,3 +157,9 @@
 
 **Bugs/Errors:**
 - Test file create nahi ki thi, sirf dekhi thi — "Module not found" error. Seekha: code dekhna aur file banana alag cheezein hain
+
+
+## Day 16 — Gale-Shapley Edge Cases (Complete)
+
+Saare 4 edge cases test kiye: students>capacity, rooms>students, multi-capacity rooms, 
+same-first-preference competition. Sab sahi result de rahe hain.
