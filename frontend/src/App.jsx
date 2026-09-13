@@ -1,9 +1,9 @@
-import MyAllotment from './pages/MyAllotment';
+import AdminResults from './pages/AdminResults';
 
 function App() {
   return (
     <div>
-      <MyAllotment />
+      <AdminResults />
     </div>
   );
 }

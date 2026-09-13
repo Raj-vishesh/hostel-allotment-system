@@ -194,3 +194,11 @@ same-first-preference competition. Sab sahi result de rahe hain.
 - `new Date(str).toLocaleDateString()` — DB timestamp ko readable date mein convert karna
 
 **Verification:** users.id vs students.id wala Day 19 ka fix confirm hua — sahi student ka sahi room dikh raha hai
+
+## Day 21 — Admin Results View (Backend + Frontend)
+**Kya banaya:** `GET /api/allotments` (sab students ka result) + AdminResults table page.
+
+**Concepts seekhe:**
+- Multiple JOINs — 4 tables ko chain karke (allotments → students → users, allotments → rooms) combined data lana
+- HTML table basics — `<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, `<td>`
+- Tailwind `last:border-0` — last row se extra border hatana

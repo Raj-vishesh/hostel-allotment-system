@@ -33,4 +33,22 @@ const getMyAllotment = async (req, res) => {
   }
 };
 
-module.exports = { getMyAllotment };
+const getAllAllotments = async (req, res) => {
+  try {
+    const [allotments] = await pool.query(
+      `SELECT a.id, u.name AS student_name, u.email, s.roll_number,
+              r.room_number, r.hostel_block, r.room_type, a.matched_at
+       FROM allotments a
+       JOIN students s ON a.student_id = s.id
+       JOIN users u ON s.user_id = u.id
+       JOIN rooms r ON a.room_id = r.id
+       ORDER BY r.hostel_block, r.room_number`
+    );
+
+    res.status(200).json({ count: allotments.length, allotments });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+module.exports = { getMyAllotment, getAllAllotments };
