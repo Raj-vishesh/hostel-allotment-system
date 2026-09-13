@@ -184,3 +184,13 @@ same-first-preference competition. Sab sahi result de rahe hain.
 - Lekin `allotmentController.js` mein galti se `req.user.userId` (jo `users.id` hai) ko seedha compare kar rahe the
 - Fix: pehle `users.id` se `students.id` nikaalo (`students` table se lookup), phir usी se allotment dhoondo
 - **Seekha:** Cross-referencing tables mein IDs ka matlab clearly track karna zaroori hai, especially jab schema evolve hota hai (jaise humne `students` table baad mein add ki)
+
+## Day 20 — Results View (Frontend)
+**Kya banaya:** MyAllotment page — student apna allotted room card format mein dekh sake.
+
+**Concepts seekhe:**
+- `useState(null)` — jab data ka structure pata hai lekin shuru mein "kuch nahi hai" ka signal chahiye
+- Ternary se poora conditional block render karna (`allotment ? <div>...</div> : <div>...</div>`)
+- `new Date(str).toLocaleDateString()` — DB timestamp ko readable date mein convert karna
+
+**Verification:** users.id vs students.id wala Day 19 ka fix confirm hua — sahi student ka sahi room dikh raha hai

@@ -1,9 +1,9 @@
-import PreferenceForm from './pages/PreferenceForm';
+import MyAllotment from './pages/MyAllotment';
 
 function App() {
   return (
     <div>
-      <PreferenceForm />
+      <MyAllotment />
     </div>
   );
 }
