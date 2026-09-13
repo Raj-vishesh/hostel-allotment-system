@@ -34,6 +34,37 @@ function AdminResults() {
     fetchAllotments();
   }, []);
 
+  // ============ NAYA CODE YAHAN SE SHURU ============
+  
+  const convertToCSV = (data) => {
+    const headers = ['Name', 'Roll Number', 'Room', 'Block', 'Type'];
+
+    const rows = data.map((item) =>
+      [item.student_name, item.roll_number, item.room_number, item.hostel_block, item.room_type].join(',')
+    );
+
+    return [headers.join(','), ...rows].join('\n');
+  };
+
+ const handleExport = () => {
+ const csvContent = convertToCSV(allotments);
+
+  const blob = new Blob([csvContent], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'allotment_results.csv';
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+};
+
+  // ============ NAYA CODE YAHAN KHATAM ============
+
   if (loading) {
     return <div className="text-center mt-10 text-slate-500">Loading results...</div>;
   }
@@ -45,8 +76,21 @@ function AdminResults() {
   return (
     <div className="min-h-screen bg-slate-100 px-4 py-10">
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-2xl font-bold text-slate-800 mb-1">Allotment Results</h1>
-        <p className="text-slate-500 text-sm mb-6">{allotments.length} students matched</p>
+        <div className="flex justify-between items-center mb-6">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800 mb-1">Allotment Results</h1>
+            <p className="text-slate-500 text-sm">{allotments.length} students matched</p>
+          </div>
+
+          {/* NAYA BUTTON YAHAN */}
+          <button
+            onClick={handleExport}
+            className="bg-green-600 hover:bg-green-700 text-white text-sm font-medium 
+                       px-4 py-2 rounded-lg transition"
+          >
+            Export CSV
+          </button>
+        </div>
 
         <div className="bg-white rounded-xl shadow overflow-hidden border border-slate-200">
           <table className="w-full text-sm text-left">

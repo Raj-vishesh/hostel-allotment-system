@@ -202,3 +202,14 @@ same-first-preference competition. Sab sahi result de rahe hain.
 - Multiple JOINs — 4 tables ko chain karke (allotments → students → users, allotments → rooms) combined data lana
 - HTML table basics — `<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, `<td>`
 - Tailwind `last:border-0` — last row se extra border hatana
+
+
+## Day 22 — CSV Export
+**Kya banaya:** Admin ke liye "Export CSV" button — allotment data CSV file mein download hota hai.
+
+**Concepts seekhe:**
+- CSV format — comma-separated values, `.join(',')` aur `.join('\n')` se banaya
+- `Blob` — raw data ko "virtual file" mein convert karna, browser mein
+- `URL.createObjectURL()` — Blob ka temporary downloadable URL banana
+- Invisible `<a>` tag trick — programmatically click karke file download karana
+- `URL.revokeObjectURL()` — cleanup karna, memory leak se bachna
