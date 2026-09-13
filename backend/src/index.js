@@ -7,6 +7,7 @@ const authRoutes = require('./routes/authRoutes');
 const roomRoutes = require('./routes/roomRoutes');
 const preferenceRoutes = require('./routes/preferenceRoutes');
 const matchRoutes = require('./routes/matchRoutes');
+const allotmentRoutes = require('./routes/allotmentRoutes');
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/rooms', roomRoutes);
 app.use('/api/preferences', preferenceRoutes);
 app.use('/api/match', matchRoutes);
+app.use('/api/allotments', allotmentRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Backend is running' });

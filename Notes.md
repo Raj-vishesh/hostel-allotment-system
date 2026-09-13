@@ -174,3 +174,13 @@ same-first-preference competition. Sab sahi result de rahe hain.
 - Nested loops (`for...in` ke andar `for...of`) — nested data structure (object of arrays) process karne ke liye
 
 **Result:** Test kiya real DB data se — matchedCount aur allotments table dono sahi update hue
+
+## Day 19 — Results View API + Important Bug Fix
+
+**Kya banaya:** `GET /api/allotments/my` — student apni allotted room dekh sake.
+
+**Bada bug jo mila:**
+- `preferences.student_id` aur `allotments.student_id` actually `students.id` reference karte hain, `users.id` nahi
+- Lekin `allotmentController.js` mein galti se `req.user.userId` (jo `users.id` hai) ko seedha compare kar rahe the
+- Fix: pehle `users.id` se `students.id` nikaalo (`students` table se lookup), phir usी se allotment dhoondo
+- **Seekha:** Cross-referencing tables mein IDs ka matlab clearly track karna zaroori hai, especially jab schema evolve hota hai (jaise humne `students` table baad mein add ki)
