@@ -10,7 +10,7 @@ function PreferenceForm() {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/rooms');
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/rooms`);
         const data = await response.json();
         setRooms(data.rooms);
       } catch (err) {
@@ -52,7 +52,7 @@ function PreferenceForm() {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await fetch('http://localhost:5000/api/preferences', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/preferences`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -3,36 +3,49 @@ const pool = require('../config/db');
 
 const register = async (req, res) => {
   try {
-    // Frontend se aaya JSON data destructure kar rahe hain
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, roll_number, branch, year, gender } = req.body;
 
-    // Basic validation - koi field khali na ho
     if (!name || !email || !password || !role) {
-      return res.status(400).json({ message: 'All fields are required' });
+      return res.status(400).json({ message: 'Name, email, password, and role are required' });
     }
- 
+
     const [existingUser] = await pool.query(
       'SELECT id FROM users WHERE email = ?',
       [email]
     );
- 
+
     if (existingUser.length > 0) {
       return res.status(400).json({ message: 'Email already registered' });
     }
- 
+
     const hashedPassword = await bcrypt.hash(password, 10);
- 
+
     const [result] = await pool.query(
       'INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)',
       [name, email, hashedPassword, role]
     );
-    
+
+    const userId = result.insertId;
+
+    // Student profile insertion
+    if (role === 'student') {
+      await pool.query(
+        'INSERT INTO students (user_id, roll_number, branch, year, gender) VALUES (?, ?, ?, ?, ?)',
+        [
+          userId,
+          roll_number || null,
+          branch || null,
+          year ? (parseInt(year, 10) || 1) : 1,
+          gender || 'Other',
+        ]
+      );
+    }
+
     res.status(201).json({
       message: 'User registered successfully',
-      userId: result.insertId,
+      userId,
     });
   } catch (err) {
-
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
