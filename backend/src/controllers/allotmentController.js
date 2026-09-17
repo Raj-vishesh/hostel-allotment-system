@@ -16,9 +16,12 @@ const getMyAllotment = async (req, res) => {
     const studentId = students[0].id;
 
     const [result] = await pool.query(
-      `SELECT a.id, r.room_number, r.hostel_block, r.capacity, r.room_type, a.matched_at
+      `SELECT a.id, u.name AS student_name, s.roll_number, s.branch, s.year,
+              r.room_number, r.hostel_block, r.capacity, r.floor, r.room_type, a.matched_at
        FROM allotments a
        JOIN rooms r ON a.room_id = r.id
+       JOIN students s ON a.student_id = s.id
+       JOIN users u ON s.user_id = u.id
        WHERE a.student_id = ?`,
       [studentId]
     );

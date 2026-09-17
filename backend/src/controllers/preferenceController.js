@@ -68,7 +68,7 @@ const getMyPreferences = async (req, res) => {
     const studentId = students[0].id;
 
     const [preferences] = await pool.query(
-      `SELECT p.id, p.rank_order, r.id AS room_id, r.room_number, r.hostel_block
+      `SELECT p.id, p.rank_order, r.id AS room_id, r.room_number, r.hostel_block, r.floor, r.room_type, r.capacity
        FROM preferences p
        JOIN rooms r ON p.room_id = r.id
        WHERE p.student_id = ?
