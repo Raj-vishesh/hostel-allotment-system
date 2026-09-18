@@ -54,4 +54,49 @@ const getAllAllotments = async (req, res) => {
   }
 };
 
-module.exports = { getMyAllotment, getAllAllotments };
+const getAdminStudents = async (req, res) => {
+  try {
+    const [students] = await pool.query(`
+      SELECT s.id, s.roll_number, s.branch, s.year, s.gender,
+             u.name, u.email,
+             r.id AS allotted_room_id, r.room_number AS allotted_room_number, r.hostel_block AS allotted_block
+      FROM students s
+      JOIN users u ON s.user_id = u.id
+      LEFT JOIN allotments a ON a.student_id = s.id
+      LEFT JOIN rooms r ON a.room_id = r.id
+      ORDER BY s.id ASC
+    `);
+
+    const [allPreferences] = await pool.query(`
+      SELECT p.student_id, p.rank_order, r.id AS room_id, r.room_number, r.hostel_block
+      FROM preferences p
+      JOIN rooms r ON p.room_id = r.id
+      ORDER BY p.student_id, p.rank_order ASC
+    `);
+
+    const prefMap = {};
+    for (const p of allPreferences) {
+      if (!prefMap[p.student_id]) prefMap[p.student_id] = [];
+      prefMap[p.student_id].push({
+        room_id: p.room_id,
+        room_number: p.room_number,
+        hostel_block: p.hostel_block,
+        rank_order: p.rank_order,
+      });
+    }
+
+    const result = students.map((s) => ({
+      ...s,
+      preferences: prefMap[s.id] || [],
+    }));
+
+    res.status(200).json({
+      count: result.length,
+      students: result,
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+module.exports = { getMyAllotment, getAllAllotments, getAdminStudents };

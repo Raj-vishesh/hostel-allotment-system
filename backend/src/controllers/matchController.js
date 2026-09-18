@@ -57,4 +57,13 @@ const runMatch = async (req, res) => {
   }
 };
 
-module.exports = { runMatch };
+const resetMatch = async (req, res) => {
+  try {
+    await pool.query('DELETE FROM allotments');
+    res.status(200).json({ message: 'Allotments reset successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+module.exports = { runMatch, resetMatch };

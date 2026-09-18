@@ -50,7 +50,9 @@ const deleteRoom = async (req, res) => {
       return res.status(404).json({ message: 'Room not found' });
     }
 
-    // Delete karo
+    // Delete from allotments and preferences first to avoid foreign key violations
+    await pool.query('DELETE FROM allotments WHERE room_id = ?', [id]);
+    await pool.query('DELETE FROM preferences WHERE room_id = ?', [id]);
     await pool.query('DELETE FROM rooms WHERE id = ?', [id]);
     res.status(200).json({ message: 'Room deleted successfully' });
   } catch (err) {

@@ -15,11 +15,7 @@ function App() {
 
         <Route path="/student-dashboard/*" element={<StudentDashboard />} />
 
-        <Route path="/admin-dashboard" element={<AdminDashboard />}>
-          <Route path="rooms" element={<RoomList />} />
-          <Route path="add-room" element={<AddRoom />} />
-          <Route path="results" element={<AdminResults />} />
-        </Route>
+        <Route path="/admin-dashboard/*" element={<AdminDashboard />} />
       </Routes>
     </BrowserRouter>
   );
